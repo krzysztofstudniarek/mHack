@@ -1,0 +1,22 @@
+{
+  "name": "m_hack",
+  "version": "1.0.0",
+  "description": "mBank hackaton page",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krzysztofstudniarek/mHack.git"
+  },
+  "keywords": [
+    "hackaton"
+  ],
+  "author": "Krzysztof Studniarek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/krzysztofstudniarek/mHack/issues"
+  },
+  "homepage": "https://github.com/krzysztofstudniarek/mHack#readme"
+}
