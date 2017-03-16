@@ -1,0 +1,10 @@
+extend default
+
+block content
+	p.
+		Szczegóły projektu: 
+	
+	ul
+		li: <b>Tytuł:</b> #{doc.title}
+		li: <b>Zgłaszający:</b> #{doc.reporter}
+		li: <b>Opis:</b> #{doc.description}

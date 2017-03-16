@@ -1,0 +1,9 @@
+extend default
+
+block content
+	p.
+		Lista zgłoszonych projektów: 
+	
+	ul
+	each doc in data
+		li: a(href='/list?id='+doc.id)=doc.doc.title
