@@ -1,8 +1,9 @@
 var express = require('express')
   ,	stylus = require('stylus')
+  , config = require('config')
   , logger = require('morgan')
   , parser = require('body-parser')
-  , nano = require('nano')('http://localhost:5984')
+  , nano = require('nano')(config.get('dbConfig.host'))
   , uuid = require('uuid/v1')
   , app = express()
   , hompage = require('jade').compileFile(__dirname + '/source/templates/homepage.jade')
@@ -27,7 +28,7 @@ app.use(parser.urlencoded({
 }));
 app.use(parser.json());
 
-var hackaton_db = nano.db.use('hackaton');
+var hackaton_db = nano.db.use(config.get('dbConfig.dbName'));
 
 app.get('/', function (req, res, next) {
   try {
@@ -52,7 +53,7 @@ app.post('/ideas', function (req, res, next) {
 	var data = { 
 		reporter: req.body.name, 
 		title: req.body.title, 
-		type: req.body.description
+		description: req.body.description
 	};
 	
 	hackaton_db.insert(data, uuid(), function(err, body){
@@ -93,6 +94,7 @@ app.get('/list', function (req, res, next) {
 		hackaton_db.get(req.query.id, { revs_info: false, include_docs: true }, function(err, body) {
 		  if (!err){
 			try {
+				console.log(body)
 				var html = details({ title: 'Details', doc: body })
 				res.send(html)
 			} catch (e) {
@@ -114,6 +116,6 @@ app.get('/contact', function (req, res, next) {
 
 
 
-app.listen(process.env.PORT || 3000, function () {
-  console.log('localhost:' + (process.env.PORT || 3000))
+app.listen(process.env.PORT || config.get('appPort'), function () {
+  console.log('localhost:' + (process.env.PORT || config.get('appPort')))
 })

@@ -1,0 +1,8 @@
+{
+	"dbConfig": {
+	  "host": "http://localhost:5984",
+	  "dbName": "hackaton"
+	},
+	
+	"appPort": 7000
+}
