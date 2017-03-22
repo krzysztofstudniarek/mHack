@@ -28,6 +28,13 @@ app.use(parser.urlencoded({
 }));
 app.use(parser.json());
 
+nano.db.get(config.get('dbConfig.dbName'), function(err, body) {
+  if (err) {
+	nano.db.create(config.get('dbConfig.dbName'))
+	console.log('Utworzono bazę: '+config.get('dbConfig.dbName'));
+  }
+});
+
 var hackaton_db = nano.db.use(config.get('dbConfig.dbName'));
 
 app.get('/', function (req, res, next) {
