@@ -13,7 +13,7 @@ var express = require('express')
   , confirmation = require('jade').compileFile(__dirname + '/source/templates/confirmation.jade')
   , errpage = require('jade').compileFile(__dirname + '/source/templates/error.jade')
   , details = require('jade').compileFile(__dirname + '/source/templates/details.jade') 
-
+  , takers =  require('jade').compileFile(__dirname + '/source/templates/takers.jade')
 
 app.use(logger('dev'))
 app.use(express.static(__dirname + '/static'))
@@ -37,6 +37,32 @@ app.get('/', function (req, res, next) {
   } catch (e) {
     next(e)
   }
+})
+
+app.get('/taker', function (req, res, next) {
+  try {
+    var html = takers({ title: 'Biorę udział' })
+    res.send(html)
+  } catch (e) {
+    next(e)
+  }
+})
+
+app.post('/taker', function (req, res, next) {
+	
+	var data = { 
+		attendee: req.body.name, 
+	};
+	
+	hackaton_db.insert(data, uuid(), function(err, body){
+	  if(err){
+		var html = errpage({ title: 'Error' })
+		res.send(html)
+	  }else{
+	  	var html = confirmation({ title: 'Confirmation' })
+		res.send(html)
+	  }
+	});
 })
 
 app.get('/ideas', function (req, res, next) {
