@@ -1,0 +1,12 @@
+extend default
+
+block content
+	h1= title
+	br
+	form(name="add-idea", method="post", action="/taker")
+		label(for='name') Imię i nazwisko:
+		br
+		input(name='name', type='text', value='', id='name', class='input')
+		br
+		br
+		input(type="submit", value="Zapisz mnie", class="button")
