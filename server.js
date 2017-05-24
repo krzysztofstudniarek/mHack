@@ -7,7 +7,6 @@ var express = require('express')
   , uuid = require('uuid/v1')
   , app = express()
   , hompage = require('jade').compileFile(__dirname + '/source/templates/homepage.jade')
-  , ideas = require('jade').compileFile(__dirname + '/source/templates/ideas.jade')
   , list = require('jade').compileFile(__dirname + '/source/templates/list.jade')
   , contact = require('jade').compileFile(__dirname + '/source/templates/contact.jade')
   , confirmation = require('jade').compileFile(__dirname + '/source/templates/confirmation.jade')
@@ -76,35 +75,6 @@ app.post('/taker', function (req, res, next) {
 	};
 	
 	hackaton_db.insert(atendee, uuid(), function(err, body){
-	  if(err){
-		var html = errpage({ title: 'Error' })
-		res.send(html)
-	  }else{
-	  	var html = confirmation({ title: 'Confirmation' })
-		res.send(html)
-	  }
-	});
-})
-
-app.get('/ideas', function (req, res, next) {
-  try {
-    var html = ideas({ title: 'Dodaj nowy projekt' })
-    res.send(html)
-  } catch (e) {
-    next(e)
-  }
-})
-
-app.post('/ideas', function (req, res, next) {
-	
-	var data = { 
-		type: 'idea',
-		reporter: req.body.name, 
-		title: req.body.title, 
-		description: req.body.description
-	};
-	
-	hackaton_db.insert(data, uuid(), function(err, body){
 	  if(err){
 		var html = errpage({ title: 'Error' })
 		res.send(html)
