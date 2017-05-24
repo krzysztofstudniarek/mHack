@@ -47,21 +47,35 @@ app.get('/', function (req, res, next) {
 })
 
 app.get('/taker', function (req, res, next) {
-  try {
-    var html = takers({ title: 'Biorę udział' })
-    res.send(html)
-  } catch (e) {
-    next(e)
-  }
+  
+	hackaton_db.list({type:'idea', include_docs: true}, function(err, body){
+		if(!err){			
+			var rows = body.rows;//the rows returned
+			try {
+				var html = takers({ title: 'Biorę udział', ideas: rows })
+				res.send(html)
+			} catch (e) {
+				next(e)
+			}
+		}else{
+			try {
+				var html = errpage({ title: 'Error' })
+				res.send(html)
+			} catch (e) {
+				next(e)
+			}
+		}
+	});
 })
 
 app.post('/taker', function (req, res, next) {
 	
-	var data = { 
+	var atendee = { 
+		type: 'taker',
 		attendee: req.body.name, 
 	};
 	
-	hackaton_db.insert(data, uuid(), function(err, body){
+	hackaton_db.insert(atendee, uuid(), function(err, body){
 	  if(err){
 		var html = errpage({ title: 'Error' })
 		res.send(html)
@@ -84,6 +98,7 @@ app.get('/ideas', function (req, res, next) {
 app.post('/ideas', function (req, res, next) {
 	
 	var data = { 
+		type: 'idea',
 		reporter: req.body.name, 
 		title: req.body.title, 
 		description: req.body.description
@@ -105,7 +120,7 @@ app.get('/list', function (req, res, next) {
 	console.log(req.query.id);
 	
 	if(req.query.id == undefined){
-		hackaton_db.list({include_docs: true}, function(err, body){
+		hackaton_db.list({type:'idea', include_docs: true}, function(err, body){
 			if(!err){			
 				var rows = body.rows;//the rows returned
 				try {

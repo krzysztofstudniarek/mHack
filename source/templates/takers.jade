@@ -9,4 +9,28 @@ block content
 		input(name='name', type='text', value='', id='name', class='input')
 		br
 		br
+		.form-group
+			label <b>Chcę wziąć udział w projekcie:</b>
+			br
+			br
+			each val in ideas
+				.checkbox
+					input(name= val type="checkbox", value="")
+					label= val
+			
+		br
+		br
+		label <b>Dodaję nowy projekt: </b>
+		br
+		br
+		label(for='title') Tytuł:
+		br
+		input(name='title', type='text', value='', id='title', class='input')
+		br
+		br
+		label(for='description') Opis:
+		br
+		textarea(name='description', value='', id='description', class='input', rows='15')
+		br
+		br
 		input(type="submit", value="Zapisz mnie", class="button")
