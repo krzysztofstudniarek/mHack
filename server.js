@@ -50,8 +50,14 @@ app.get('/taker', function (req, res, next) {
 	hackaton_db.list({type:'idea', include_docs: true}, function(err, body){
 		if(!err){			
 			var rows = body.rows;//the rows returned
+			var ideas = [];
+			for(var i = 0; i<rows.length; i++){
+				if(rows[i].doc.type == 'idea'){
+					ideas.push(rows[i]);
+				}
+			}
 			try {
-				var html = takers({ title: 'Biorę udział', ideas: rows })
+				var html = takers({ title: 'Biorę udział', ideas: ideas })
 				res.send(html)
 			} catch (e) {
 				next(e)
@@ -69,20 +75,42 @@ app.get('/taker', function (req, res, next) {
 
 app.post('/taker', function (req, res, next) {
 	
+	if(req.body.name == ""){
+			var html = errpage({ title: 'Error' });
+			res.send(html);
+	}
+
 	var atendee = { 
 		type: 'taker',
-		attendee: req.body.name, 
+		attendee: req.body.name,
+		projects: req.body.idea
 	};
+
+	if(req.body.title != ""){
+		var data = { 
+			type: 'idea',
+			reporter: req.body.name, 
+			title: req.body.title, 
+			description: req.body.description
+		};
+		
+		hackaton_db.insert(data, uuid(), function(err, body){
+			if(err){
+				var html = errpage({ title: 'Error' });
+				res.send(html);
+			}
+		});
+	}
 	
 	hackaton_db.insert(atendee, uuid(), function(err, body){
 	  if(err){
-		var html = errpage({ title: 'Error' })
-		res.send(html)
-	  }else{
-	  	var html = confirmation({ title: 'Confirmation' })
-		res.send(html)
+			var html = errpage({ title: 'Error' });
+			res.send(html);
 	  }
 	});
+
+	var html = confirmation({ title: 'Confirmation' });
+	res.send(html);
 })
 
 app.get('/list', function (req, res, next) {
@@ -93,8 +121,14 @@ app.get('/list', function (req, res, next) {
 		hackaton_db.list({type:'idea', include_docs: true}, function(err, body){
 			if(!err){			
 				var rows = body.rows;//the rows returned
+				var ideas = [];
+				for(var i = 0; i<rows.length; i++){
+					if(rows[i].doc.type == 'idea'){
+						ideas.push(rows[i]);
+					}
+				}
 				try {
-					var html = list({ title: 'List', data: rows })
+					var html = list({ title: 'List', data: ideas })
 					res.send(html)
 				} catch (e) {
 					next(e)

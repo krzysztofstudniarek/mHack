@@ -9,15 +9,13 @@ block content
 		input(name='name', type='text', value='', id='name', class='input')
 		br
 		br
-		.form-group
-			label <b>Chcę wziąć udział w projekcie:</b>
-			br
-			br
-			each val in ideas
-				.checkbox
-					input(name= val type="checkbox", value="")
-					label= val
-			
+		label <b>Podobają mi się projekty:</b>
+		br
+		br
+		each val in ideas
+			input(name= "idea", type="checkbox", value= val.id)
+			label= val.doc.title
+			br			
 		br
 		br
 		label <b>Dodaję nowy projekt: </b>
