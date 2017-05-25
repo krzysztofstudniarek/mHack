@@ -160,6 +160,43 @@ app.get('/list', function (req, res, next) {
 	}
 })
 
+app.post('/comment', function(req, res, next){
+
+  	console.log(req.body)
+
+		hackaton_db.get(req.body.id, { revs_info: false, include_docs: true }, function(err, body) {
+		  if (!err){
+			if(body.comments == undefined){
+				body.comments = [];
+			}
+
+			if(req.body.name != "" && req.body.comment != ""){
+				body.comments.push({
+						name : req.body.name,
+						comment : req.body.comment
+				});
+			}
+
+			hackaton_db.insert(body, body._id, function (error, response) {
+				if(err){
+					var html = errpage({ title: 'Error' });
+					res.send(html);
+				}else{
+					try {
+						var html = details({ title: 'Details', doc: body })
+						res.send(html)
+					} catch (e) {
+						next(e)
+					}
+				}
+			})
+		  }else{
+				var html = errpage({ title: 'Error' });
+				res.send(html);
+			}
+		});
+})
+
 app.get('/contact', function (req, res, next) {
   try {
     var html = contact({ title: 'Contact' })

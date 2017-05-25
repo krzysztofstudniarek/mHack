@@ -1,10 +1,33 @@
 extend default
 
 block content
-	p.
-		Szczegóły projektu: 
+	h1 #{doc.title}
+	br
 	
 	ul
-		li: <b>Tytuł:</b> #{doc.title}
 		li: <b>Zgłaszający:</b> #{doc.reporter}
 		li: <b>Opis:</b> #{doc.description}
+	br
+	br
+	
+	h2 Komentarze:
+	each com in doc.comments
+		div(id="comment_div")
+			h4 #{com.name}
+			p #{com.comment}
+	br
+	br
+	h2 Dodaj komentarz:
+	form(name="add-idea", method="post", action="/comment")
+		label(for='name') Imię i nazwisko:
+		br
+		input(name='name', type='text', value='', id='name', class='input')
+		br
+		br
+		label(for='description') Komentarz:
+		br
+		textarea(name='comment', value='', id='comment', class='input', rows='5')
+		br
+		br
+		input(name='id', type='hidden', value="#{doc._id}", id='id', class='input')
+		input(type="submit", value="Zapisz mnie", class="button")

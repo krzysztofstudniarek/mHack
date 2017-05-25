@@ -1,9 +1,8 @@
 extend default
 
 block content
-	p.
-		Lista zgłoszonych projektów: 
-	
+	h1 Lista zgłoszonych projektów: 
+	br
 	ul
 	each doc in data
 		li: a(href='/list?id='+doc.id)=doc.doc.title
