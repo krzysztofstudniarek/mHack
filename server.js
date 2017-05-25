@@ -51,13 +51,16 @@ app.get('/taker', function (req, res, next) {
 		if(!err){			
 			var rows = body.rows;//the rows returned
 			var ideas = [];
+			var counter = 0;
 			for(var i = 0; i<rows.length; i++){
 				if(rows[i].doc.type == 'idea'){
 					ideas.push(rows[i]);
+				}else{
+					counter++;
 				}
 			}
 			try {
-				var html = takers({ title: 'Biorę udział', ideas: ideas })
+				var html = takers({ title: 'Biorę udział', ideas: ideas, counter: counter})
 				res.send(html)
 			} catch (e) {
 				next(e)

@@ -2,6 +2,7 @@ extend default
 
 block content
 	h1= title
+	p Bądź <b>#{counter}</b> osobą która weźmie udział :).
 	br
 	form(name="add-idea", method="post", action="/taker")
 		label(for='name') Imię i nazwisko:
@@ -14,9 +15,8 @@ block content
 		br
 		each val in ideas
 			input(name= "idea", type="checkbox", value= val.id)
-			label= val.doc.title
-			br			
-		br
+			label=val.doc.title
+			br
 		br
 		label <b>Dodaję nowy projekt: </b>
 		br
