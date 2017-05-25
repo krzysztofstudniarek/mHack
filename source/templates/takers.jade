@@ -15,7 +15,8 @@ block content
 		br
 		each val in ideas
 			input(name= "idea", type="checkbox", value= val.id)
-			label=val.doc.title
+			&nbsp
+			a(href='/list?id='+val.id , target='_blank')=val.doc.title
 			br
 		br
 		label <b>Dodaję nowy projekt: </b>
