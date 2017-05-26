@@ -1,22 +1,28 @@
 doctype html
 html
 	head
-		link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Barrio")
+		link(rel="stylesheet", href="/css/font.css")
 		link(rel='stylesheet', href='/css/index.css')
+		link(rel="stylesheet", href="/css/bootstrap.min.css")
+		meta(name="viewport" content="width=device-width, initial-scale=1")
 		title HackOnTop
 	body
-		.header
-			h1.page-title HackOnTop
+		.container
+			.row(class="header")
+				h1.page-title HackOnTop
+			
+			.row(style=" background-color: black")
+				ul.nav(class="navbar-nav")
+					li(class="navbar-nav"): a(href='/') HackOnTop
+					li(class="navbar-nav"): a(href='/taker') Wezmę udział
+					li(class="navbar-nav"): a(href='/list') Lista tematów
+				ul.nav(class="navbar-nav mynavbar-right")
+					li(class="navbar-nav"): a(href='/contact') Kontakt
 
-		ul.nav
-			li: a(href='/') HackOnTop
-			li: a(href='/taker') Wezmę udział
-			li: a(href='/list') Lista tematów
-			li: a(href='/contact') Kontakt
+			.row
+				.panel(class="panel-default panel-body")
+					block content
 
-		.main-content
-			block content
-
-		.footer
-			p hackaton@mbank.pl
+			.footer
+				a(href='mailto:hackaton@mbank.pl') hackaton@mbank.pl
 

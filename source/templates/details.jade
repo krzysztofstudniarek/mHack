@@ -4,33 +4,29 @@ block content
 	h1 #{doc.title}
 	br
 	
-	ul
-		li: <b>Zgłaszający:</b> #{doc.reporter}
-		li: <b>Opis:</b> #{doc.description}
+	.panel(class="panel-primary")
+		.panel-heading Autor: #{doc.reporter}
+		.panel-body #{doc.description}
 	br
-	br
-	
+
 	if(doc.comments != undefined)
 		h2 Komentarze:
 		each com in doc.comments
-			div(id="comment_div")
-				h4 #{com.name}
-				p #{com.comment}
+			.panel(class="panel-success")
+				.panel-heading Autor: #{com.name}
+				.panel-body #{com.comment}
 		br
 		br
 	else
 		br
 	h2 Dodaj komentarz:
 	form(name="add-idea", method="post", action="/comment")
-		label(for='name') Imię i nazwisko:
-		br
-		input(name='name', type='text', value='', id='name', class='input')
-		br
-		br
-		label(for='description') Komentarz:
-		br
-		textarea(name='comment', value='', id='comment', class='input', rows='5')
-		br
-		br
-		input(name='id', type='hidden', value="#{doc._id}", id='id', class='input')
-		input(type="submit", value="Dodaj", class="button")
+		.form-group
+			label(for='name') Imię i nazwisko:
+			input(name='name', type='text', value='', id='name', class='form-control')
+		.form-group
+			label(for='description') Komentarz:
+			textarea(name='comment', value='', id='comment', class='form-control', rows='5')
+		.form-group
+			input(name='id', type='hidden', value="#{doc._id}", id='id', class='form-control')
+		input(type="submit", value="Dodaj", class="btn btn-primary")

@@ -15,13 +15,16 @@ var express = require('express')
   , takers =  require('jade').compileFile(__dirname + '/source/templates/takers.jade')
 
 app.use(logger('dev'))
+
 app.use(express.static(__dirname + '/static'))
+
 app.use(stylus.middleware({
     src: __dirname + "/source",
     dest: __dirname + "/static",
     debug: true,
-    force: true,
+    force: true
 }));
+
 app.use(parser.urlencoded({
   extended: true
 }));

@@ -2,34 +2,29 @@ extend default
 
 block content
 	h1= title
-	p Bądź <b>#{counter}</b> osobą która weźmie udział :).
+	h3 Bądź <b>#{counter + 1}</b> osobą która weźmie udział :).
 	br
 	form(name="add-idea", method="post", action="/taker")
-		label(for='name') Imię i nazwisko:
-		br
-		input(name='name', type='text', value='', id='name', class='input')
-		br
-		br
+		.form-group
+			label(for='name') Imię i nazwisko:
+			input(name='name', type='text', value='', id='name', class='form-control')
 		label <b>Podobają mi się projekty:</b>
-		br
-		br
-		each val in ideas
-			input(name= "idea", type="checkbox", value= val.id)
-			|	&nbsp;
-			a(href='/list?id='+val.id , target='_blank')=val.doc.title
-			br
-		br
-		label <b>Dodaję nowy projekt: </b>
-		br
-		br
-		label(for='title') Tytuł:
-		br
-		input(name='title', type='text', value='', id='title', class='input')
-		br
-		br
-		label(for='description') Opis:
-		br
-		textarea(name='description', value='', id='description', class='input', rows='15')
-		br
-		br
-		input(type="submit", value="Zapisz mnie", class="button")
+			each val in ideas 
+					.checkbox
+						label(style="font-size: 1.5em")
+							input(type="checkbox", value= val.id) 
+							span(class="cr")
+								i(class="cr-icon fa fa-check")
+							a(href='/list?id='+val.id , target='_blank') #{val.doc.title}
+						
+		.form-group
+			label <b>Dodaję nowy projekt: </b>
+
+		.form-group
+			label(for='title') Tytuł:
+			input(name='title', type='text', value='', id='title', class='form-control')
+		.form-group
+			label(for='description') Opis:
+			textarea(name='description', value='', id='description', class='form-control', rows='15')
+
+		input(type="submit", value="Zapisz mnie", class="btn btn-primary")
